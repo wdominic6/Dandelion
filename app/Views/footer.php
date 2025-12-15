@@ -1,0 +1,32 @@
+<footer class="mt-auto py-3">
+  <div class="container-fluid px-3 text-muted small">
+    Dandelion — Sistema de Ventas
+  </div>
+</footer>
+
+</div>
+</div>
+
+<!-- SIDEBAR MOBILE (Offcanvas) -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMobile" aria-labelledby="sidebarMobileLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="sidebarMobileLabel">Dandelion</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="list-group">
+      <a class="list-group-item list-group-item-action" href="<?= base_url('/') ?>">Dashboard</a>
+      <a class="list-group-item list-group-item-action active" href="<?= base_url('tables') ?>">Tablas</a>
+      <a class="list-group-item list-group-item-action" href="<?= base_url('productos') ?>">Productos</a>
+      <a class="list-group-item list-group-item-action" href="<?= base_url('ventas') ?>">Ventas</a>
+      <a class="list-group-item list-group-item-action" href="<?= base_url('clientes') ?>">Clientes</a>
+      <a class="list-group-item list-group-item-action text-danger" href="<?= base_url('logout') ?>">Salir</a>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap LOCAL -->
+<script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
+</body>
+
+</html>
