@@ -8,14 +8,13 @@
             <div class="text-muted small">Tablas de ejemplo con Bootstrap local (sin SB Admin).</div>
         </div>
         <div class="ms-auto d-flex gap-2">
-            <a class="btn btn-primary" href="<?= base_url('/ventas/nueva/') ?>">Nueva venta</a>
+            <a class="btn btn-primary" href="<?= base_url('ventas/nueva') ?>">Nueva venta</a>
             <button class="btn btn-outline-secondary" type="button">Exportar</button>
         </div>
     </div>
     <div>
         <p>
-            <a href="<?= base_url('/unidades/nuevo/') ?>" class="btn btn-info">Agregar</a>
-            <a href="<?= base_url('/unidades/eliminados/') ?>" class="btn btn-warning">Eliminados</a>
+            <a href="<?= base_url('/unidades') ?>" class="btn btn-warning">Eliminados</a>
         </p>
     </div>
     <!-- Card 1: DataTables style (solo estructura) -->
@@ -34,7 +33,6 @@
                             <th>nombre</th>
                             <th>Nombre corto</th>
                             <th></th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,8 +41,7 @@
                                 <td><?php echo $dato['id']; ?></td>
                                 <td><?php echo $dato['nombre']; ?></td>
                                 <td><?php echo $dato['nombre_corto']; ?></td>
-                                <td><a href="<?= base_url('/unidades/editar/' . $dato['id']) ?>" class="btn btn-sm btn-primary">Editar</a></td>
-                                <td><a href="<?= base_url('/unidades/eliminar/' . $dato['id']) ?>" class="btn btn-sm btn-danger">Eliminar</a></td>
+                                <td><a href="<?= base_url('/unidades/reingresar/' . $dato['id']) ?>" class="btn btn-sm btn-primary">Reingresar</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -53,7 +50,6 @@
 
         </div>
     </div>
-
 
     <div class="text-muted small mt-3">
         Tip: cuando agregues DataTables/Chart.js localmente, evita CDN y cárgalos desde <code>public/assets</code>.
