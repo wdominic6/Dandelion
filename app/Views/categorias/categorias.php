@@ -14,8 +14,8 @@
     </div>
     <div>
         <p>
-            <a href="<?= base_url('/unidades/nuevo/') ?>" class="btn btn-info">Agregar</a>
-            <a href="<?= base_url('/unidades/eliminados/') ?>" class="btn btn-warning">Eliminados</a>
+            <a href="<?= base_url('/categorias/nuevo/') ?>" class="btn btn-info">Agregar</a>
+            <a href="<?= base_url('/categorias/eliminados/') ?>" class="btn btn-warning">Eliminados</a>
         </p>
     </div>
     <!-- Card 1: DataTables style (solo estructura) -->
@@ -32,7 +32,6 @@
                         <tr>
                             <th>Id</th>
                             <th>nombre</th>
-                            <th>Nombre corto</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -42,9 +41,8 @@
                             <tr>
                                 <td><?php echo $dato['id']; ?></td>
                                 <td><?php echo $dato['nombre']; ?></td>
-                                <td><?php echo $dato['nombre_corto']; ?></td>
-                                <td><a href="<?= base_url('/unidades/editar/' . $dato['id']) ?>" class="btn btn-sm btn-primary">Editar</a></td>
-                                <td><a href="<?= base_url('/unidades/eliminar/' . $dato['id']) ?>" class="btn btn-sm btn-danger">Eliminar</a></td>
+                                <td><a href="<?= base_url('/categorias/editar/' . $dato['id']) ?>" class="btn btn-sm btn-primary">Editar</a></td>
+                                <td><a href="<?= base_url('/categorias/eliminar/' . $dato['id']) ?>" class="btn btn-sm btn-danger">Eliminar</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

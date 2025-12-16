@@ -16,6 +16,13 @@ $routes->get('unidades/eliminar/(:num)', 'Unidades::eliminar/$1');
 $routes->get('unidades/eliminados', 'Unidades::eliminados');
 $routes->get('unidades/reingresar/(:num)', 'Unidades::reingresar/$1');
 
-
+$routes->get('categorias', 'Categorias::index');
+$routes->get('categorias/nuevo', 'Categorias::nuevo');
+$routes->post('categorias/insertar', 'Categorias::insertar');
+$routes->post('categorias/actualizar', 'Categorias::actualizar');
+$routes->get('categorias/editar/(:num)', 'Categorias::editar/$1');
+$routes->get('categorias/eliminar/(:num)', 'Categorias::eliminar/$1');
+$routes->get('categorias/eliminados', 'Categorias::eliminados');
+$routes->get('categorias/reingresar/(:num)', 'Categorias::reingresar/$1');
 
 
