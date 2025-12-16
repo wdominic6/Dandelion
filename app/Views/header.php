@@ -106,7 +106,7 @@
           <a class="nav-link" href="<?= base_url('productos') ?>">Productos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('unidades/unidades') ?>">Unidades</a>
+          <a class="nav-link" href="<?= base_url('unidades') ?>">Unidades</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?= base_url('ventas') ?>">Ventas</a>

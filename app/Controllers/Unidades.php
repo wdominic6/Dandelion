@@ -21,4 +21,13 @@ class Unidades extends BaseController
            . view('unidades/unidades', $data)
            . view('footer');
     }
+    
+public function nuevo()
+    {
+        $data = ['titulo' => 'Agregar unidad'];
+        return
+            view('header')
+           . view('unidades/nuevo', $data)
+           . view('footer');
+    }
 }
