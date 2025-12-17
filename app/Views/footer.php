@@ -27,6 +27,17 @@
 
 <!-- Bootstrap LOCAL -->
 <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
+<script>
+  const modal = document.getElementById('modal-confirma');
+
+  modal.addEventListener('show.bs.modal', function (event) {
+    const trigger = event.relatedTarget;
+    const href = trigger.getAttribute('data-href');
+
+    modal.querySelector('.btn-ok').setAttribute('href', href);
+  });
+</script>
+
 </body>
 
 </html>

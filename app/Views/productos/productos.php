@@ -14,8 +14,8 @@
     </div>
     <div>
         <p>
-            <a href="<?= base_url('/unidades/nuevo/') ?>" class="btn btn-info">Agregar</a>
-            <a href="<?= base_url('/unidades/eliminados/') ?>" class="btn btn-warning">Eliminados</a>
+            <a href="<?= base_url('/productos/nuevo/') ?>" class="btn btn-info">Agregar</a>
+            <a href="<?= base_url('/productos/eliminados/') ?>" class="btn btn-warning">Eliminados</a>
         </p>
     </div>
     <!-- Card 1: DataTables style (solo estructura) -->
@@ -31,8 +31,10 @@
                     <thead class="table-light">
                         <tr>
                             <th>Id</th>
-                            <th>nombre</th>
-                            <th>Nombre corto</th>
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Existencias</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -41,12 +43,14 @@
                         <?php foreach ($datos as $dato) : ?>
                             <tr>
                                 <td><?php echo $dato['id']; ?></td>
+                                <td><?php echo $dato['codigo']; ?></td>
                                 <td><?php echo $dato['nombre']; ?></td>
-                                <td><?php echo $dato['nombre_corto']; ?></td>
-                                <td><a href="<?= base_url('/unidades/editar/' . $dato['id']) ?>" class="btn btn-sm btn-primary">Editar</a></td>
+                                <td><?php echo $dato['precio_venta']; ?></td>
+                                <td><?php echo $dato['existencias']; ?></td>
+                                <td><a href="<?= base_url('/productos/editar/' . $dato['id']) ?>" class="btn btn-sm btn-primary">Editar</a></td>
                                 <td>
                                     <a href="#"
-                                        data-href="<?= base_url('/unidades/eliminar/' . $dato['id']) ?>"
+                                        data-href="<?= base_url('/productos/eliminar/' . $dato['id']) ?>"
                                         data-bs-toggle="modal"
                                         data-bs-target="#modal-confirma" data-placement="top" title="Eliminar registro" class="btn btn-sm btn-danger">Eliminar</a>
                                 </td>

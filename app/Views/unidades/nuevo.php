@@ -4,7 +4,12 @@
     <!-- Heading tipo SB Admin -->
     <div class="container-fluid p-3 p-lg-4">
         <h4 class="mt-4"><?php echo $titulo; ?></h4>
-        <form action="<?= base_url('unidades/insertar') ?>" method="post" autocomplete="off">
+        <?= \Config\Services::validation()->listErrors(); ?>
+        <form action="<?= site_url('unidades/insertar') ?>" method="post" autocomplete="off">
+    <?= csrf_field() ?>
+
+        <!--form action="<?= base_url('unidades/insertar') ?>" method="post" autocomplete="off"-->
+            <?php csrf_field(); ?>
             <div class="form-group">
                 <div class="row">
                     <div class="col-12 col-sm-6">

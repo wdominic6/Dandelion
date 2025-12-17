@@ -109,7 +109,7 @@
           <a class="nav-link" href="<?= base_url('unidades') ?>">Unidades</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('ventas') ?>">Ventas</a>
+          <a class="nav-link" href="<?= base_url('productos') ?>">Productos</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?= base_url('clientes') ?>">Clientes</a>
@@ -138,8 +138,6 @@
             data-bs-target="#sidebarMobile">
             Menú
           </button>
-
-          <div class="fw-semibold">Tablas</div>
 
           <form class="ms-auto d-none d-md-flex" role="search" style="max-width: 420px; width: 100%;">
             <input class="form-control" type="search" placeholder="Buscar..." aria-label="Buscar">

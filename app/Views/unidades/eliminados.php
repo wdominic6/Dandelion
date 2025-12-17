@@ -41,7 +41,10 @@
                                 <td><?php echo $dato['id']; ?></td>
                                 <td><?php echo $dato['nombre']; ?></td>
                                 <td><?php echo $dato['nombre_corto']; ?></td>
-                                <td><a href="<?= base_url('/unidades/reingresar/' . $dato['id']) ?>" class="btn btn-sm btn-primary">Reingresar</a></td>
+                                <td><a href="#"
+                                        data-href="<?= base_url('/unidades/reingresar/' . $dato['id']) ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modal-confirma" data-placement="top" title="Reingresar registro" class="btn btn-sm btn-primary">Eliminar</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -55,3 +58,21 @@
         Tip: cuando agregues DataTables/Chart.js localmente, evita CDN y cárgalos desde <code>public/assets</code>.
     </div>
 </main>
+<div class="modal fade" id="modal-confirma" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Reingresar registro</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Desea reingresar este registro?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">NO</button>
+                <a class="btn btn-danger btn-ok">Si</a>
+            </div>
+        </div>
+    </div>
+</div>
