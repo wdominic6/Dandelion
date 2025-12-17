@@ -5,7 +5,15 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
+$routes->setDefaultNamespace('App\Controllers');
+$routes->setDefaultController('usuarios');
+$routes->setDefaultMethod('index');
+$routes->get('/', 'Usuarios::login');
+$routes->get('login', 'Usuarios::login');
+$routes->post('login', 'Usuarios::valida');
+$routes->get('tables', 'Usuarios::tables');
+$routes->get('tables', 'Usuarios::tables');
+$routes->get('tables', 'Usuarios::tables');
 $routes->get('tables', 'Home::index');
 $routes->get('unidades', 'Unidades::index');
 $routes->get('unidades/nuevo', 'Unidades::nuevo');
@@ -55,7 +63,11 @@ $routes->get('logout', 'Usuarios::logout');
 $routes->post('configuracion/actualizar', 'Configuracion::actualizar');
 $routes->get('configuracion', 'Configuracion::index');
 
-
-
-
-
+$routes->get('usuarios', 'Usuarios::index');
+$routes->get('usuarios/nuevo', 'Usuarios::nuevo');
+$routes->post('usuarios/insertar', 'Usuarios::insertar');
+$routes->post('usuarios/actualizar', 'Usuarios::actualizar');
+$routes->get('usuarios/editar/(:num)', 'Usuarios::editar/$1');
+$routes->get('usuarios/eliminar/(:num)', 'Usuarios::eliminar/$1');
+$routes->get('usuarios/eliminados', 'Usuarios::eliminados');
+$routes->get('usuarios/reingresar/(:num)', 'Usuarios::reingresar/$1');

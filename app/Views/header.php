@@ -1,3 +1,6 @@
+<?php 
+  $user_session = session();
+?>
 <!doctype html>
 <html lang="es">
 
@@ -117,6 +120,9 @@
         <li class="nav-item">
           <a class="nav-link" href="<?= base_url('configuracion') ?>">Configuracion</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url('usuarios') ?>">Usuarios</a>
+        </li>
         <li class="nav-item mt-2 text-uppercase small opacity-75 px-2">Cuenta</li>
         <li class="nav-item">
           <a class="nav-link" href="<?= base_url('logout') ?>">Salir</a>
@@ -147,7 +153,7 @@
 
           <div class="dropdown">
             <button class="btn btn-light border dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              Usuario
+              <?php echo $user_session->get('usuario'); ?>
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="<?= base_url('perfil') ?>">Perfil</a></li>
