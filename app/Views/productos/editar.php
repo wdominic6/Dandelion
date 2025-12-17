@@ -50,7 +50,7 @@
                         <input class="form-control" id="precio_venta" name="precio_venta" type="text" value="<?php echo $producto['precio_venta']; ?>" required>
                     </div>
                     <div class="col-12 col-sm-6">
-                        <label>Precio_compra</label>
+                        <label>Precio compra</label>
                         <input class="form-control" id="precio_compra" name="precio_compra" type="text" value="<?php echo $producto['precio_compra']; ?>" required>
                     </div>
                 </div>

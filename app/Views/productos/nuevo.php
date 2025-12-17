@@ -4,9 +4,14 @@
     <!-- Heading tipo SB Admin -->
     <div class="container-fluid p-3 p-lg-4">
         <h4 class="mt-4"><?php echo $titulo; ?></h4>
-        <?= \Config\Services::validation()->listErrors(); ?>
+
+        <?php if (isset($validation)) : ?>
+            <div class="alert alert-danger">
+                <?php echo $validation->listErrors(); ?>
+            </div>
+        <?php endif; ?>
+
         <form action="<?= site_url('productos/insertar') ?>" method="post" autocomplete="off">
-            <?= csrf_field() ?>
             <div class="form-group">
                 <div class="row">
                     <div class="col-12 col-sm-6">
@@ -48,7 +53,7 @@
                         <input class="form-control" id="precio_venta" name="precio_venta" type="text" autofocus required>
                     </div>
                     <div class="col-12 col-sm-6">
-                        <label>Precio_compra</label>
+                        <label>Precio compra</label>
                         <input class="form-control" id="precio_compra" name="precio_compra" type="text" required>
                     </div>
                 </div>

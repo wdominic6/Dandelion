@@ -114,7 +114,9 @@
         <li class="nav-item">
           <a class="nav-link" href="<?= base_url('clientes') ?>">Clientes</a>
         </li>
-
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url('configuracion') ?>">Configuracion</a>
+        </li>
         <li class="nav-item mt-2 text-uppercase small opacity-75 px-2">Cuenta</li>
         <li class="nav-item">
           <a class="nav-link" href="<?= base_url('logout') ?>">Salir</a>

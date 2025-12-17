@@ -8,9 +8,26 @@ use App\Models\unidadesmodel;
 class Unidades extends BaseController
 {
     protected $unidades;
+    protected $reglas;
     public function __construct()
     {
         $this->unidades = new \App\Models\unidadesmodel();
+        helper(['form']);
+
+        $this->reglas = [
+            'nombre' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio.',
+                ],
+            ],
+            'nombre_corto' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio.',
+                ],
+            ],
+        ];
     }
     public function index($activo = 1)
     {
@@ -43,25 +60,29 @@ class Unidades extends BaseController
     }
     public function insertar()
     {
-        if (! $this->validate([
-            'nombre'       => 'required',
-            'nombre_corto' => 'required',
-        ])) {
+        if ($this->validate($this->reglas)) {
+            $this->unidades->save([
+                'nombre'       => $this->request->getPost('nombre'),
+                'nombre_corto' => $this->request->getPost('nombre_corto'),
+            ]);
+            $this->request->getPost('nombre_corto');
+            return redirect()->to(base_url('unidades'));
+        } else {
+            $data = ['titulo' => 'Agregar unidad', 'validation' => $this->validator];
             return view('header')
                 . view('unidades/nuevo', ['titulo' => 'Agregar unidad', 'validation' => $this->validator])
                 . view('footer');
         }
-
-        $this->unidades->save([
-            'nombre'       => $this->request->getPost('nombre'),
-            'nombre_corto' => $this->request->getPost('nombre_corto'),
-        ]);
-        return redirect()->to(base_url('unidades'));
+        
     }
-    public function editar($id)
+    public function editar($id, $valid = null)
     {
         $unidad = $this->unidades->where('id', $id)->first();
-        $data = ['titulo' => 'Editar unidad', 'datos' => $unidad];
+        if ($valid != null) {
+            $data = ['titulo' => 'Editar unidad', 'datos' => $unidad, 'validation' => $valid];
+        } else {
+            $data = ['titulo' => 'Editar unidad', 'datos' => $unidad];
+        }
         return
             view('header')
             . view('unidades/editar', $data)
@@ -69,11 +90,15 @@ class Unidades extends BaseController
     }
     public function actualizar()
     {
-        $this->unidades->update($this->request->getPost('id'), [
-            'nombre' => $this->request->getPost('nombre'),
-            'nombre_corto' => $this->request->getPost('nombre_corto'),
-        ]);
-        return redirect()->to(base_url('unidades'));
+        if ($this->validate($this->reglas)) {
+            $this->unidades->update($this->request->getPost('id'), [
+                'nombre' => $this->request->getPost('nombre'),
+                'nombre_corto' => $this->request->getPost('nombre_corto'),
+            ]);
+            return redirect()->to(base_url('unidades'));
+        } else {
+            return $this->editar($this->request->getPost('id'), $this->validator);
+        }
     }
     public function eliminar($id)
     {

@@ -34,4 +34,28 @@ $routes->get('productos/eliminar/(:num)', 'Productos::eliminar/$1');
 $routes->get('productos/eliminados', 'Productos::eliminados');
 $routes->get('productos/reingresar/(:num)', 'Productos::reingresar/$1');
 
+$routes->get('clientes', 'Clientes::index');
+$routes->get('clientes/nuevo', 'Clientes::nuevo');
+$routes->post('clientes/insertar', 'Clientes::insertar');
+$routes->post('clientes/actualizar', 'Clientes::actualizar');
+$routes->get('clientes/editar/(:num)', 'Clientes::editar/$1');
+$routes->get('clientes/eliminar/(:num)', 'Clientes::eliminar/$1');
+$routes->get('clientes/eliminados', 'Clientes::eliminados');
+$routes->get('clientes/reingresar/(:num)', 'Clientes::reingresar/$1');
+
+$routes->get('configuracion', 'Configuracion::index');
+$routes->get('configuracion/configuracion', 'Configuracion::index');
+$routes->post('configuracion/insertar', 'Configuracion::insertar');
+$routes->post('configuracion/actualizar', 'Configuracion::actualizar');
+$routes->get('configuracion/editar/(:num)', 'Configuracion::editar/$1');
+$routes->get('configuracion/eliminar/(:num)', 'Configuracion::eliminar/$1');
+$routes->get('configuracion/eliminados', 'Configuracion::eliminados');
+$routes->get('configuracion/reingresar/(:num)', 'Configuracion::reingresar/$1');
+$routes->get('logout', 'Usuarios::logout');
+$routes->post('configuracion/actualizar', 'Configuracion::actualizar');
+$routes->get('configuracion', 'Configuracion::index');
+
+
+
+
 
