@@ -12,8 +12,6 @@ $routes->get('/', 'Usuarios::login');
 $routes->get('login', 'Usuarios::login');
 $routes->post('login', 'Usuarios::valida');
 $routes->get('tables', 'Usuarios::tables');
-$routes->get('tables', 'Usuarios::tables');
-$routes->get('tables', 'Usuarios::tables');
 $routes->get('tables', 'Home::index');
 $routes->get('unidades', 'Unidades::index');
 $routes->get('unidades/nuevo', 'Unidades::nuevo');
@@ -41,6 +39,7 @@ $routes->get('productos/editar/(:num)', 'Productos::editar/$1');
 $routes->get('productos/eliminar/(:num)', 'Productos::eliminar/$1');
 $routes->get('productos/eliminados', 'Productos::eliminados');
 $routes->get('productos/reingresar/(:num)', 'Productos::reingresar/$1');
+$routes->get('productos/buscarPorCodigo(:any)', 'Productos::buscarPorCodigo/$1');
 
 $routes->get('clientes', 'Clientes::index');
 $routes->get('clientes/nuevo', 'Clientes::nuevo');
@@ -71,3 +70,14 @@ $routes->get('usuarios/editar/(:num)', 'Usuarios::editar/$1');
 $routes->get('usuarios/eliminar/(:num)', 'Usuarios::eliminar/$1');
 $routes->get('usuarios/eliminados', 'Usuarios::eliminados');
 $routes->get('usuarios/reingresar/(:num)', 'Usuarios::reingresar/$1');
+$routes->get('perfil', 'Usuarios::perfil');
+$routes->post('usuarios/cambia_password', 'Usuarios::cambia_password');
+$routes->get('cambia_password', 'Usuarios::cambia_password');
+$routes->post('usuarios/actualizar_password', 'Usuarios::actualizar_password');
+
+$routes->get('compras', 'Compras::index');
+$routes->get('compras/nuevo', 'Compras::nuevo');
+$routes->post('compras/guarda', 'Compras::guarda');
+$routes->post('compras/guardarCompra', 'Compras::guardarCompra');
+$routes->get('compras/eliminar/(:num)', 'Compras::eliminar/$1');
+

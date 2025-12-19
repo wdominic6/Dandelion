@@ -10,7 +10,7 @@ use App\Models\rolesmodel;
 class Usuarios extends BaseController
 {
     protected $usuarios, $cajas, $roles;
-    protected $reglas, $reglaslogin;
+    protected $reglas, $reglaslogin, $reglascambia;
     public function __construct()
     {
         $this->usuarios = new usuariosmodel();
@@ -61,6 +61,21 @@ class Usuarios extends BaseController
         $this->reglaslogin = [
             'usuario'  => ['rules' => 'required', 'errors' => ['required' => 'El usuario es obligatorio.']],
             'password' => ['rules' => 'required', 'errors' => ['required' => 'La contraseña es obligatoria.']],
+        ];
+        $this->reglascambia = [
+            'password' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio.',
+                ],
+            ],
+            'repassword' => [
+                'rules' => 'required|matches[password]',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio.',
+                    'matches' => 'Las contraseñas no coinciden.',
+                ],
+            ],
         ];
     }
     public function index($activo = 1)
@@ -159,44 +174,72 @@ class Usuarios extends BaseController
     }
     public function valida()
     {
-        if (! $this->validate($this->reglaslogin)) {
-            return redirect()->to(site_url('login'))->withInput();
+        if ($this->validate($this->reglaslogin)) {
+            $usuario  = $this->request->getPost('usuario');
+            $password = $this->request->getPost('password');
+            $datosusuario = $this->usuarios->where('usuario', $usuario)->first();
+            if ($datosusuario != null) {
+                if (password_verify($password, $datosusuario['password'])) {
+                    $datosSesion = [
+                        'id_usuario' => $datosusuario['id'],
+                        'nombre'     => $datosusuario['nombre'],
+                        'id_caja'    => $datosusuario['id_caja'],
+                        'id_rol'     => $datosusuario['id_rol'],
+                        'logged_in'  => true,
+                    ];
+                    $session = session();
+                    $session->set($datosSesion);
+                    return redirect()->to(site_url('configuracion'));
+                } else {
+                    $data = ['error' => 'Contraseña incorrecta'];
+                    return view('login', $data);
+                }
+            } else {
+                $data = ['error' => 'El usuario no existe'];
+                return view('login', $data);
+            }
+        } else {
+            $data = ['validation' => $this->validator];
+            return view('login', $data);
         }
-
-        $usuario  = $this->request->getPost('usuario');
-        $password = $this->request->getPost('password');
-
-        $datosusuario = $this->usuarios->where('usuario', $usuario)->first();
-
-        if (! $datosusuario) {
-            session()->setFlashdata('error', 'Usuario no encontrado.');
-            return redirect()->to(site_url('login'));
-        }
-
-        if (! password_verify($password, $datosusuario['password'])) {
-            session()->setFlashdata('error', 'Contraseña incorrecta.');
-            return redirect()->to(site_url('login'));
-        }
-
-        session()->set([
-            'id_usuario' => $datosusuario['id'],
-            'usuario'    => $datosusuario['usuario'],
-            'nombre'     => $datosusuario['nombre'],
-            'id_caja'    => $datosusuario['id_caja'],
-            'id_rol'     => $datosusuario['id_rol'],
-            'logged_in'  => true,
-        ]);
-
-        return redirect()->to(site_url('unidades'));
-    }
-    public function tables()
-    {
-        return view('unidades'); // o la vista real
     }
     public function logout()
     {
         $session = session();
         $session->destroy();
-        return redirect()->to(site_url('login'));
+        return redirect()->to(site_url('/'));
+    }
+    public function cambia_password()
+    {
+        $session = session();
+        $usuario = $this->usuarios->where('id', $session->get('id_usuario'))->first();
+        $data = ['titulo' => 'Cambiar contraseña', 'usuario' => $usuario];
+        return view('header')
+            . view('usuarios/cambia_password', $data)
+            . view('footer');
+    }
+    public function actualizar_password()
+    {
+        if ($this->validate($this->reglascambia)) {
+            $session = session();
+            $idUsuario = $session->get('id_usuario');
+            $hash = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+
+            $this->usuarios->update($idUsuario, [
+                'password' => $hash,
+            ]);
+            $usuario = $this->usuarios->where('id', $session->get('id_usuario'))->first();
+            $data = ['titulo' => 'Cambiar contraseña', 'usuario' => $usuario, 'mensaje' => 'Contraseña actualizada correctamente.'];
+            return view('header')
+                . view('usuarios/cambia_password', $data)
+                . view('footer');
+        } else {
+            $session = session();
+            $usuario = $this->usuarios->where('id', $session->get('id_usuario'))->first();
+            $data = ['titulo' => 'Cambiar contraseña', 'usuario' => $usuario, 'validation' => $this->validator];
+            return view('header')
+                . view('usuarios/cambia_password', $data)
+                . view('footer');
+        }
     }
 }

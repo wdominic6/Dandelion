@@ -1,5 +1,5 @@
-<?php 
-  $user_session = session();
+<?php
+$user_session = session();
 ?>
 <!doctype html>
 <html lang="es">
@@ -7,10 +7,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dandelion | Tablas</title>
+  <title>Dandelion</title>
 
   <!-- Bootstrap LOCAL -->
   <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css') ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/dataTables.min.css') ?>">
 
   <!-- Estilos mínimos para lograr “look & feel” tipo admin (sin SB Admin) -->
   <style>
@@ -80,6 +81,28 @@
       color: #0d6efd;
       border: 1px solid rgba(13, 110, 253, .18);
     }
+
+    .nav-link {
+      color: #adb5bd;
+      padding: 0.75rem 1rem;
+    }
+
+    .nav-link:hover {
+      color: #fff;
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-link i {
+      opacity: 0.7;
+    }
+
+    .nav-link:hover i {
+      opacity: 1;
+    }
+
+    .nav-link .fa-chevron-right {
+      font-size: 0.7rem;
+    }
   </style>
 </head>
 
@@ -87,47 +110,88 @@
   <div class="d-flex app-shell">
 
     <!-- SIDEBAR -->
-    <aside class="sidebar d-none d-lg-flex flex-column p-3">
+    <aside class="flex-column list-unstyled sidebar d-none d-lg-flex flex-column p-3">
       <div class="d-flex align-items-center mb-3">
         <span class="brand fs-5">Dandelion</span>
-        <span class="ms-auto badge badge-soft rounded-pill">Admin</span>
+        <span class="ms-auto badge badge-soft rounded-pill"></span>
       </div>
 
       <hr class="border-light opacity-25">
 
-      <ul class="nav nav-pills flex-column gap-1">
-        <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('/') ?>">Dashboard</a>
-        </li>
+      <!-- VENTAS -->
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center justify-content-between" data-bs-toggle="collapse"
+          href="#menuproductos" role="button" aria-expanded="false" aria-controls="menuVentas">
+          <span>
+            <i class="fas fa-cash-register me-2"></i>
+            Productos
+          </span>
+          <i class="fas fa-chevron-right small""></i>
+        </a>
 
-        <li class="nav-item mt-2 text-uppercase small opacity-75 px-2">Gestión</li>
+        <div class="collapse" id="menuproductos" data-bs-parent="#sidebarAccordion">
+          <ul class="nav flex-column ms-3">
+            <li class="nav-item">
+              <a class="nav-link" href="<?= base_url('productos') ?>">Productos</a>
+            </li>
 
-        <li class="nav-item">
-          <a class="nav-link active" href="<?= base_url('tables') ?>">Tablas</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('categorias') ?>">Categorias</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('unidades') ?>">Unidades</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('productos') ?>">Productos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('clientes') ?>">Clientes</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('configuracion') ?>">Configuracion</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('usuarios') ?>">Usuarios</a>
-        </li>
-        <li class="nav-item mt-2 text-uppercase small opacity-75 px-2">Cuenta</li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('logout') ?>">Salir</a>
-        </li>
-      </ul>
+            <li class="nav-item">
+              <a class="nav-link" href="<?= base_url('unidades') ?>">Unidades</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="<?= base_url('categorias') ?>">Categorias</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('clientes') ?>">Clientes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center justify-content-between" data-bs-toggle="collapse"
+          href="#menucompras" role="button" aria-expanded="false" aria-controls="menuInventario">
+          <span>
+            <i class="fas fa-boxes me-2"></i>
+            Compras
+          </span>
+          <i class="fas fa-chevron-right small"></i>
+        </a>
+
+        <div class="collapse" id="menucompras" data-bs-parent="#sidebarAccordion">
+          <ul class="nav flex-column ms-3">
+            <li class="nav-item">
+              <a class="nav-link" href="<?= base_url('compras/nuevo') ?>">Nueva compra</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="<?= base_url('compras') ?>">Listado de compras</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center justify-content-between" data-bs-toggle="collapse"
+          href="#menuadministracion" role="button" aria-expanded="false" aria-controls="menuConfiguracion">
+          <span>
+            <i class="fas fa-cog me-2"></i>
+            Administracion
+          </span>
+          <i class="fas fa-chevron-right small"></i>
+        </a>
+
+        <div class="collapse" id="menuadministracion" data-bs-parent="#sidebarAccordion">
+          <ul class="nav flex-column ms-3">
+            <li class="nav-item">
+              <a class="nav-link" href="<?= base_url('configuracion') ?>">Configuracion</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="<?= base_url('usuarios') ?>">Usuarios</a>
+            </li>
+          </ul>
+        </div>
+      </li>
 
       <div class="mt-auto small opacity-75">
         <hr class="border-light opacity-25">
@@ -153,11 +217,11 @@
 
           <div class="dropdown">
             <button class="btn btn-light border dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              <?php echo $user_session->get('usuario'); ?>
+              <?php echo $user_session->get('nombre'); ?>
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="<?= base_url('perfil') ?>">Perfil</a></li>
-              <li><a class="dropdown-item" href="<?= base_url('cambiar-password') ?>">Cambiar contraseña</a></li>
+              <li><a class="dropdown-item" href="<?= base_url('cambia_password') ?>">Cambiar contraseña</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>

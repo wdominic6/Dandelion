@@ -26,15 +26,37 @@
 </div>
 
 <!-- Bootstrap LOCAL -->
+<script src="<?= base_url('assets/js/jquery.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
+
+<!-- DataTables -->
+<script src="<?= base_url('assets/js/dataTables.min.js') ?>"></script>
+
+<!-- Chart.js -->
+<script src="<?= base_url('assets/js/chart.min.js') ?>"></script>
+
 <script>
   const modal = document.getElementById('modal-confirma');
 
-  modal.addEventListener('show.bs.modal', function (event) {
+  modal.addEventListener('show.bs.modal', function(event) {
     const trigger = event.relatedTarget;
     const href = trigger.getAttribute('data-href');
 
     modal.querySelector('.btn-ok').setAttribute('href', href);
+  });
+
+  function calcularSubtotal() {
+    let precio = parseFloat($('#precio_compra').val()) || 0;
+    let cantidad = parseInt($('#cantidad').val()) || 0;
+    let subtotal = precio * cantidad;
+
+    $('#subtotal').val(subtotal.toFixed(2));
+  }
+  $('#cantidad').on('input', function() {
+    calcularSubtotal();
+  });
+  $('#precio_compra').on('input', function() {
+    calcularSubtotal();
   });
 </script>
 
