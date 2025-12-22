@@ -85,6 +85,8 @@ $routes->get('TemporalCompra/inserta/(:num)/(:num)/(:alphanum)', 'TemporalCompra
 $routes->get('TemporalCompra/cargaProductos/(:alphanum)', 'TemporalCompra::cargaProductos/$1');
 $routes->get('TemporalCompra/eliminar/(:num)/(:alphanum)', 'TemporalCompra::eliminar/$1/$2');
 $routes->get('TemporalCompra/eliminaProducto/(:num)/(:alphanum)', 'TemporalCompra::eliminaProducto/$1/$2');
+$routes->get('compras/generaCompraPdf/(:num)', 'Compras::generaCompraPdf/$1');
+$routes->get('compras/muestraCompraPdf/(:num)', 'Compras::muestraCompraPdf/$1');
 
 
 
