@@ -49,12 +49,27 @@ class temporalcompramodel extends Model
         $datos = $this->get()->getRow();
         return $datos; 
     }
-    public function porCom($id_product, $folio){
+    public function porCompra($folio){
         $this->select('*');
         $this->where('folio', $folio);
-        $this->where('id_producto', $id_product);
-        $datos = $this->get()->getRow();
+        $datos = $this->findAll();
         return $datos; 
+    }
+    public function actualizarProductoCompra($id_producto, $folio, $cantidad, $subtotal){
+        $this->set('cantidad', $cantidad);
+        $this->set('subtotal', $subtotal);
+        $this->where('id_producto', $id_producto);
+        $this->where('folio', $folio);
+        $this->update();
+    }
+    public function eliminarProductoCompra($id_producto, $folio){
+        $this->where('id_producto', $id_producto);
+        $this->where('folio', $folio);
+        $this->delete();
+    }
+    public function eliminarCompra($folio){
+        $this->where('folio', $folio);
+        $this->delete();
     }
 }
 ?>

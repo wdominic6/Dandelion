@@ -9,14 +9,12 @@ use App\Models\productosmodel;
 class TemporalCompra extends BaseController
 {
     protected $temporal_compra, $productos;
-    protected $reglas;
     public function __construct()
     {
         $this->temporal_compra = new \App\Models\temporalcompramodel();
         $this->productos = new \App\Models\productosmodel();
-        helper(['form']);
     }
-    public function insertar($id_producto, $cantidad, $id_compra)
+    public function inserta($id_producto, $cantidad, $id_compra)
     {
         $error = '';
         $producto = $this->productos->where('id', $id_producto)->first();
@@ -26,6 +24,7 @@ class TemporalCompra extends BaseController
             if ($datosExiste) {
                 $cantidad = $datosExiste->cantidad + $cantidad;
                 $subtotal = $cantidad * $datosExiste->precio;
+                $this->temporal_compra->actualizarProductoCompra($id_producto, $id_compra, $cantidad, $subtotal);
             } else {
                 $subtotal = $cantidad * $producto['precio_compra'];
                 $this->temporal_compra->save([
@@ -41,43 +40,59 @@ class TemporalCompra extends BaseController
         } else {
             $error = 'El producto no existe';
         }
+        $res['datos'] = $this->cargaProductos($id_compra);
+        $res['total'] = number_format($this->totalProductos($id_compra), 2  , '.', ',');
         $res['error'] = $error;
         echo json_encode($res);
     }
 
-    public function editar($id, $valid = null)
+    public function cargaProductos($id_compra)
     {
-        $unidad = $this->unidades->where('id', $id)->first();
-        if ($valid != null) {
-            $data = ['titulo' => 'Editar unidad', 'datos' => $unidad, 'validation' => $valid];
-        } else {
-            $data = ['titulo' => 'Editar unidad', 'datos' => $unidad];
+        $resultado = $this->temporal_compra->porCompra($id_compra);
+        $fila = '';
+        $numFila = 0;
+        foreach ($resultado as $row) {
+            $numFila = $numFila + 1;
+            $fila .= '<tr id="fila' . $numFila . '">';
+            $fila .= "<td>" . $numFila . "</td>";
+            $fila .= "<td>" . $row['codigo']. "</td>";
+            $fila .= "<td>" . $row['nombre'] . "</td>";
+            $fila .= "<td>" . $row['precio'] . "</td>";
+            $fila .= "<td>" . $row['cantidad'] . "</td>";
+            $fila .= "<td>" . $row['subtotal']. "</td>";
+            $fila .= "<td><a onclick=\"eliminaProducto(" . $row['id_producto'].", '".$id_compra."')\" class='borrar'><button type='button' class='btn btn-danger btn-sm'>Eliminar</button></a></td>";
+            $fila .= "</tr>";
         }
-        return
-            view('header')
-            . view('unidades/editar', $data)
-            . view('footer');
+        return $fila;
     }
-    public function actualizar()
+    public function totalProductos($id_compra)
     {
-        if ($this->validate($this->reglas)) {
-            $this->unidades->update($this->request->getPost('id'), [
-                'nombre' => $this->request->getPost('nombre'),
-                'nombre_corto' => $this->request->getPost('nombre_corto'),
-            ]);
-            return redirect()->to(base_url('unidades'));
-        } else {
-            return $this->editar($this->request->getPost('id'), $this->validator);
+        $resultado = $this->temporal_compra->porCompra($id_compra);
+        $total = 0;
+        
+        foreach ($resultado as $row) {
+
+        $total += $row['subtotal'];
+
         }
+        return $total;
     }
-    public function eliminar($id)
+    public function eliminar($id_producto, $id_compra)
     {
-        $this->unidades->update($id, ['activo' => 0]);
-        return redirect()->to(site_url('unidades'));
-    }
-    public function reingresar($id)
-    {
-        $this->unidades->update($id, ['activo' => 1]);
-        return redirect()->to(site_url('unidades'));
+        $datosExiste = $this->temporal_compra->porIdProductoCompra($id_producto, $id_compra);
+        if ($datosExiste) {
+            if($datosExiste->cantidad > 1) {
+                $cantidad = $datosExiste->cantidad - 1;
+                $subtotal = $cantidad * $datosExiste->precio;
+                $this->temporal_compra->actualizarProductoCompra($id_producto, $id_compra, $cantidad, $subtotal);
+            } else {
+                $this->temporal_compra->eliminarProductoCompra($id_producto, $id_compra);
+            }
+        }
+
+        $res['datos'] = $this->cargaProductos($id_compra);
+        $res['total'] = number_format($this->totalProductos($id_compra), 2  , '.', ',');
+        $res['error'] = '';
+        echo json_encode($res);
     }
 }

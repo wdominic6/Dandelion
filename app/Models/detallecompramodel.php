@@ -3,9 +3,9 @@
 namespace App\Models;
 use CodeIgniter\Model;
 
-class productosmodel extends Model
+class detallecompramodel extends Model
 {
-    protected $table      = 'productos';
+    protected $table      = 'detalle_compra';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
@@ -13,7 +13,7 @@ class productosmodel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['codigo', 'nombre', 'precio_venta', 'precio_compra', 'existencias', 'stock_minimo', 'inventariable', 'id_unidad', 'id_categoria', 'activo'];
+    protected $allowedFields = ['id_compra', 'id_producto', 'nombre', 'cantidad', 'precio', ];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -23,7 +23,7 @@ class productosmodel extends Model
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'fecha_creacion';
     protected $updatedField  = '';
-    protected $deletedField  = 'deleted_at';
+    protected $deletedField  = '';
 
     // Validation
     protected $validationRules      = [];
@@ -41,11 +41,15 @@ class productosmodel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-    
-    public function actualizaStock($id_producto, $cantidad){
-        $this->set('existencias', "existencias + $cantidad", false);
-        $this->where('id', $id_producto);
-        $this->update();
+
+    public function insertaCompra($id_compra, $total, $id_usuario){
+        $this->insert([
+            'folio'       => $id_compra,
+            'total'       => $total,
+            'id_usuario'  => $id_usuario,
+            
+        ]);
+        return $this->insertID();
     }
 }
 ?>

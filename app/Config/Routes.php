@@ -80,4 +80,13 @@ $routes->get('compras/nuevo', 'Compras::nuevo');
 $routes->post('compras/guarda', 'Compras::guarda');
 $routes->post('compras/guardarCompra', 'Compras::guardarCompra');
 $routes->get('compras/eliminar/(:num)', 'Compras::eliminar/$1');
+$routes->get('compras/detalle/(:num)', 'Compras::detalle/$1');
+$routes->get('TemporalCompra/inserta/(:num)/(:num)/(:alphanum)', 'TemporalCompra::inserta/$1/$2/$3');
+$routes->get('TemporalCompra/cargaProductos/(:alphanum)', 'TemporalCompra::cargaProductos/$1');
+$routes->get('TemporalCompra/eliminar/(:num)/(:alphanum)', 'TemporalCompra::eliminar/$1/$2');
+$routes->get('TemporalCompra/eliminaProducto/(:num)/(:alphanum)', 'TemporalCompra::eliminaProducto/$1/$2');
+
+
+
+
 
