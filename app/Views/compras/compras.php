@@ -14,7 +14,6 @@
     </div>
     <div>
         <p>
-            <a href="<?= base_url('/unidades/nuevo/') ?>" class="btn btn-info">Agregar</a>
             <a href="<?= base_url('/unidades/eliminados/') ?>" class="btn btn-warning">Eliminados</a>
         </p>
     </div>
@@ -31,25 +30,20 @@
                     <thead class="table-light">
                         <tr>
                             <th>Id</th>
-                            <th>nombre</th>
-                            <th>Nombre corto</th>
-                            <th></th>
+                            <th>Folio</th>
+                            <th>Total</th>
+                            <th>Fecha</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($datos as $dato) : ?>
+                        <?php foreach ($compras as $compra) : ?>
                             <tr>
-                                <td><?php echo $dato['id']; ?></td>
-                                <td><?php echo $dato['nombre']; ?></td>
-                                <td><?php echo $dato['nombre_corto']; ?></td>
-                                <td><a href="<?= base_url('/unidades/editar/' . $dato['id']) ?>" class="btn btn-sm btn-primary">Editar</a></td>
-                                <td>
-                                    <a href="#"
-                                        data-href="<?= base_url('/unidades/eliminar/' . $dato['id']) ?>"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#modal-confirma" data-placement="top" title="Eliminar registro" class="btn btn-sm btn-danger">Eliminar</a>
-                                </td>
+                                <td><?php echo $compra['id']; ?></td>
+                                <td><?php echo $compra['folio']; ?></td>
+                                <td><?php echo $compra['total']; ?></td>
+                                <td><?php echo $compra['fecha_creacion']; ?></td>
+                                <td><a href="<?php echo base_url('/compras/muestraCompraPdf/' . $compra['id']) ?>" class="btn btn-sm btn-primary">Reporte</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

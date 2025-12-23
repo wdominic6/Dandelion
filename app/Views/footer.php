@@ -25,6 +25,10 @@
   </div>
 </div>
 <script src="<?= base_url('assets/js/jquery.min.js') ?>"></script>
+<script src="<?= base_url('assets/jquery-ui/jquery-ui.min.js') ?>"></script>
+
+<!-- luego ya tu script de la vista o el script del módulo ventas -->
+
 <script src="<?= base_url('assets/js/dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/chart.min.js') ?>"></script>

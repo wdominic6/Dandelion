@@ -99,4 +99,25 @@ class Clientes extends BaseController
         $this->clientes->update($id, ['activo' => 1]);
         return redirect()->to(site_url('clientes'));
     }
+    public function autocompleteData()
+    {
+        $returnData = [];
+        $valor = $this->request->getGet('term');
+        $clientes = $this->clientes
+            ->like('nombre', $valor)
+            ->where('activo', 1)
+            ->findAll();
+
+        if (!empty($clientes)) {
+            foreach ($clientes as $row) {
+                $returnData[] = [
+                    'id' => $row['id'],
+                    'label' => $row['nombre'],
+                    'value' => $row['nombre'],
+                ];
+            }
+        }
+
+        return $this->response->setJSON($returnData);
+    }
 }

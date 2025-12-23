@@ -49,6 +49,7 @@ $routes->get('clientes/editar/(:num)', 'Clientes::editar/$1');
 $routes->get('clientes/eliminar/(:num)', 'Clientes::eliminar/$1');
 $routes->get('clientes/eliminados', 'Clientes::eliminados');
 $routes->get('clientes/reingresar/(:num)', 'Clientes::reingresar/$1');
+$routes->get('clientes/autocompleteData', 'Clientes::autocompleteData');
 
 $routes->get('configuracion', 'Configuracion::index');
 $routes->get('configuracion/configuracion', 'Configuracion::index');
@@ -87,6 +88,11 @@ $routes->get('TemporalCompra/eliminar/(:num)/(:alphanum)', 'TemporalCompra::elim
 $routes->get('TemporalCompra/eliminaProducto/(:num)/(:alphanum)', 'TemporalCompra::eliminaProducto/$1/$2');
 $routes->get('compras/generaCompraPdf/(:num)', 'Compras::generaCompraPdf/$1');
 $routes->get('compras/muestraCompraPdf/(:num)', 'Compras::muestraCompraPdf/$1');
+$routes->get('compras/compras', 'Compras::index');
+$routes->get('ventas/venta', 'Ventas::venta');
+$routes->get('ventas/caja', 'Ventas::caja');
+$routes->post('ventas/guarda', 'Ventas::guarda');
+
 
 
 

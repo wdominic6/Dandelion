@@ -24,7 +24,7 @@ class Compras extends BaseController
     public function index($activo = 1)
     {
         $compras = $this->compras->where('activo', $activo)->findAll();
-        $data = ['titulo' => 'Unidades', 'datos' => $compras];
+        $data = ['titulo' => 'Compras', 'compras' => $compras];
 
         return
             view('header')

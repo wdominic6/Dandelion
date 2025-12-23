@@ -10,10 +10,11 @@ $user_session = session();
   <title>Dandelion</title>
 
   <!-- Bootstrap LOCAL -->
-  <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css') ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/css/dataTables.min.css') ?>">
-
-
+  <link rel="stylesheet" href="<?= base_url('/assets/css/bootstrap.min.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('/assets/css/dataTables.min.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('/assets/jquery-ui/jquery-ui.min.css') ?>">
+  <script src="<?= base_url('/assets/js/jquery.min.js') ?>"></script>
+  <script src="<?= base_url('/assets/jquery-ui/jquery-ui.min.js') ?>"></script>
   <!-- Estilos mínimos para lograr “look & feel” tipo admin (sin SB Admin) -->
   <style>
     :root {
@@ -170,7 +171,10 @@ $user_session = session();
       </ul>
     </div>
   </li>
-
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="<?= base_url('ventas/venta') ?>">Caja</a>
+  </li>
   <li class="nav-item">
     <a class="nav-link d-flex align-items-center justify-content-between" data-bs-toggle="collapse"
       href="#menuadministracion" role="button" aria-expanded="false" aria-controls="menuConfiguracion">

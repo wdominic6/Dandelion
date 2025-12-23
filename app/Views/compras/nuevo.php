@@ -55,15 +55,15 @@ $id_compra = uniqid();
                         </thead>
                         <tbody></tbody>
                     </table>
-                    <div class="row">
-                        <div class="col-12 col-sm-6 offset-md-6">
-                            <label style="font-weight: bold; font-size: 30; text-align: center;">Total $</label>
-                            <input type="text" id="total" name="total" class="form-control" style="font-weight: bold; font-size: 30; text-align: center;" value="0.00">
-                            <button type="button" id="completa_compra" class="btn btn-success">Completar compra</button>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-6 offset-md-6">
+                        <label style="font-weight: bold; font-size: 30; text-align: center;">Total $</label>
+                        <input type="text" id="total" name="total" class="form-control" style="font-weight: bold; font-size: 30; text-align: center;" value="0.00">
+                        <button type="button" id="completa_compra" class="btn btn-success">Completar compra</button>
                     </div>
                 </div>
-
+            </div>
         </form>
     </div>
 
@@ -74,9 +74,9 @@ $id_compra = uniqid();
     $(document).ready(function() {
         $("#completa_compra").click(function() {
             let nFila = $("#tablaProductos tr").length;
-            if(nFila < 2){
+            if (nFila < 2) {
 
-            }else{
+            } else {
                 $("#form_compra").submit();
             }
         });
@@ -145,6 +145,7 @@ $id_compra = uniqid();
 
         }
     }
+
     function eliminaProducto(id_producto, id_compra) {
         $.ajax({
             url: '<?= base_url('TemporalCompra/eliminar/') ?>' + id_producto + '/' + id_compra,
@@ -160,6 +161,4 @@ $id_compra = uniqid();
             }
         });
     }
-       
-    
 </script>
