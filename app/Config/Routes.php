@@ -13,6 +13,7 @@ $routes->get('login', 'Usuarios::login');
 $routes->post('login', 'Usuarios::valida');
 $routes->get('tables', 'Usuarios::tables');
 $routes->get('tables', 'Home::index');
+$routes->get('dashboard', 'Home::index');
 $routes->get('unidades', 'Unidades::index');
 $routes->get('unidades/nuevo', 'Unidades::nuevo');
 $routes->post('unidades/insertar', 'Unidades::insertar');

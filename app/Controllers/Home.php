@@ -8,7 +8,7 @@ class Home extends BaseController
     {
         return
             view('header')
-           . view('tables')
+           . view('dashboard')
            . view('footer');
     }
 }

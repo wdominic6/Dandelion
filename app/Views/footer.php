@@ -1,10 +1,12 @@
-<footer class="mt-auto py-3">
-  <div class="container-fluid px-3 text-muted small">
-    Dandelion — Sistema de Ventas
-  </div>
-</footer>
+    </div>
 
-</div>
+    <footer class="mt-auto py-3">
+      <div class="container-fluid px-3 text-muted small">
+        Dandelion - Sistema de Ventas
+      </div>
+    </footer>
+
+  </div>
 </div>
 
 <!-- SIDEBAR MOBILE (Offcanvas) -->
@@ -15,7 +17,7 @@
   </div>
   <div class="offcanvas-body">
     <div class="list-group">
-      <a class="list-group-item list-group-item-action" href="<?= base_url('/') ?>">Dashboard</a>
+      <a class="list-group-item list-group-item-action" href="<?= base_url('dashboard') ?>">Dashboard</a>
       <a class="list-group-item list-group-item-action active" href="<?= base_url('tables') ?>">Tablas</a>
       <a class="list-group-item list-group-item-action" href="<?= base_url('productos') ?>">Productos</a>
       <a class="list-group-item list-group-item-action" href="<?= base_url('ventas') ?>">Ventas</a>
@@ -24,9 +26,6 @@
     </div>
   </div>
 </div>
-<script src="<?= base_url('assets/js/jquery.min.js') ?>"></script>
-<script src="<?= base_url('assets/jquery-ui/jquery-ui.min.js') ?>"></script>
-
 <!-- luego ya tu script de la vista o el script del módulo ventas -->
 
 <script src="<?= base_url('assets/js/dataTables.min.js') ?>"></script>

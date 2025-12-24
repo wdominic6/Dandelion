@@ -1,102 +1,143 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es">
 
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dandelion</title>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <!-- Font Awesome local -->
+  <link rel="stylesheet" href="<?= base_url('vendor/fontawesome-free/css/all.min.css') ?>">
 
-    <title>Dandelion</title>
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900">
 
-    <!-- Font Awesome LOCAL -->
-    <link rel="stylesheet" href="<?= base_url('vendor/fontawesome-free/css/all.min.css') ?>">
+  <!-- Bootstrap local -->
+  <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css') ?>">
 
-    <!-- Google Fonts (remoto, está bien así) -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+  <style>
+    :root {
+      --login-bg: #f3f5f8;
+      --login-card: #ffffff;
+      --login-accent: #1d4ed8;
+      --login-text: #0f172a;
+    }
 
-    <!-- Bootstrap LOCAL -->
-    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css') ?>">
+    body.login-body {
+      background: linear-gradient(135deg, #eef2f7 0%, #dbe4f0 100%);
+      color: var(--login-text);
+      font-family: 'Nunito', Arial, sans-serif;
+      min-height: 100vh;
+    }
 
-    <!-- SB Admin 2 LOCAL -->
-    <link rel="stylesheet" href="<?= base_url('css/sb-admin-2.min.css') ?>">
+    .login-shell {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
 
+    .login-card {
+      background: var(--login-card);
+      border: 0;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+      overflow: hidden;
+    }
+
+    .login-visual {
+      position: relative;
+      background-image: var(--login-image);
+      background-size: cover;
+      background-position: center;
+      color: #0f172a;
+      min-height: 100%;
+      padding: 3rem;
+    }
+
+    .login-visual-content {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.82);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+    }
+
+    .login-visual .brand {
+      font-weight: 700;
+      font-size: 1.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .image-placeholder {
+      border: 1px dashed rgba(15, 23, 42, 0.3);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      background: rgba(15, 23, 42, 0.04);
+    }
+
+    .form-control:focus {
+      border-color: var(--login-accent);
+      box-shadow: 0 0 0 0.2rem rgba(29, 78, 216, 0.15);
+    }
+
+    .btn-primary {
+      background: var(--login-accent);
+      border-color: var(--login-accent);
+    }
+  </style>
 </head>
 
-
-<body class="bg-gradient-primary">
-
+<body class="login-body">
+  <div class="login-shell">
     <div class="container">
-
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
-
-            <div class="col-xl-10 col-lg-12 col-md-9">
-
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                            <div class="col-lg-6">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Iniciar sesion</h1>
-                                    </div>
-                                    <form action="<?= site_url('login') ?>" method="post" autocomplete="off">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user"
-                                                id="usuario" name="usuario" aria-describedby="emailHelp"
-                                                placeholder="Usuario">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="password" name="password" placeholder="Contraseña">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </button>
-                                        <hr>
-                                        <?php if (isset($validation)) : ?>
-                                            <div class="alert alert-danger">
-                                                <?php echo $validation->listErrors(); ?>
-                                            </div>
-                                        <?php endif; ?>
-                                        <?php if (isset($error)) : ?>
-                                            <div class="alert alert-danger">
-                                                <?php echo $error; ?>
-                                            </div>
-                                        <?php endif; ?>
-                                    </form>
-                                    <hr>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-9">
+          <div class="card login-card">
+            <div class="row g-0">
+              <div class="col-lg-6 d-none d-lg-flex">
+                <div class="login-visual w-100" style="--login-image: url('<?= base_url('images/Dandelion_login.png') ?>');">
                 </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="p-4 p-lg-5">
+                  <h1 class="h4 mb-2">Iniciar sesion</h1>
+                  <p class="text-muted small mb-4">Ingresa tus credenciales para continuar.</p>
 
+                  <form action="<?= site_url('login') ?>" method="post" autocomplete="off">
+                    <div class="mb-3">
+                      <label class="form-label" for="usuario">Usuario</label>
+                      <input type="text" class="form-control" id="usuario" name="usuario" required>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label" for="password">Contrasena</label>
+                      <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Entrar</button>
+
+                    <?php if (isset($validation)) : ?>
+                      <div class="alert alert-danger mt-3">
+                        <?php echo $validation->listErrors(); ?>
+                      </div>
+                    <?php endif; ?>
+                    <?php if (isset($error)) : ?>
+                      <div class="alert alert-danger mt-3">
+                        <?php echo $error; ?>
+                      </div>
+                    <?php endif; ?>
+                  </form>
+                </div>
+              </div>
             </div>
-
+          </div>
         </div>
-
+      </div>
     </div>
+  </div>
 
-    <!-- jQuery LOCAL -->
-    <script src="<?= base_url('vendor/jquery/jquery.min.js') ?>"></script>
-
-    <!-- Bootstrap LOCAL -->
-    <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
-
-    <!-- jQuery Easing LOCAL -->
-    <script src="<?= base_url('vendor/jquery-easing/jquery.easing.min.js') ?>"></script>
-
-    <!-- SB Admin 2 -->
-    <script src="<?= base_url('js/sb-admin-2.min.js') ?>"></script>
-
-
+  <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
 </body>
 
 </html>

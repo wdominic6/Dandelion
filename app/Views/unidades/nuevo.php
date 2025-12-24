@@ -1,33 +1,32 @@
-<!-- MAIN -->
-<main class="container-fluid p-3 p-lg-4">
-
-    <!-- Heading tipo SB Admin -->
-    <div class="container-fluid p-3 p-lg-4">
-        <h4 class="mt-4"><?php echo $titulo; ?></h4>
-        <?php if (isset($validation)) : ?>
-            <div class="alert alert-danger">
-            <?php echo $validation->listErrors(); ?>
-            </div>
-        <?php endif; ?>
-        <form action="<?= site_url('unidades/insertar') ?>" method="post" autocomplete="off">
-            <?= csrf_field() ?>
-
-            <!--form action="<?= base_url('unidades/insertar') ?>" method="post" autocomplete="off"-->
-            <?php csrf_field(); ?>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-12 col-sm-6">
-                        <label>Nombre</label>
-                        <input class="form-control" id="nombre" name="nombre" type="text" value="<?php echo set_value('nombre') ?>" autofocus required>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                        <label>Nombre corto</label>
-                        <input class="form-control" id="nombre_corto" name="nombre_corto" type="text" value="<?php echo set_value('nombre_corto') ?>" required>
-                    </div>
-                </div>
-            </div>
-            <a href="<?= base_url('unidades') ?>" class="btn btn-primary">Regresar</a>
-            <button type="submit" class="btn btn-success">Guardar</button>
-        </form>
+<div class="container-fluid">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+      <h1 class="h4 section-title mb-0"><?php echo $titulo; ?></h1>
+      <div class="text-muted small">Crea una nueva unidad de medida.</div>
     </div>
-</main>
+  </div>
+
+  <?php if (isset($validation)) : ?>
+    <div class="alert alert-danger">
+      <?php echo $validation->listErrors(); ?>
+    </div>
+  <?php endif; ?>
+
+  <div class="card">
+    <div class="card-body">
+      <form action="<?= base_url('/unidades/insertar') ?>" method="post" autocomplete="off">
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <label class="form-label" for="nombre">Nombre</label>
+            <input class="form-control" id="nombre" name="nombre" type="text" autofocus required>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-4">
+          <a href="<?= base_url('/unidades') ?>" class="btn btn-outline-secondary">Regresar</a>
+          <button type="submit" class="btn btn-success">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

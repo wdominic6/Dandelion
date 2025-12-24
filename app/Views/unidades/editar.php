@@ -1,33 +1,31 @@
-<main class="container-fluid p-3 p-lg-4">
+<div class="container-fluid">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+      <h1 class="h4 section-title mb-0"><?php echo $titulo; ?></h1>
+      <div class="text-muted small">Actualiza la unidad de medida.</div>
+    </div>
+  </div>
 
-    <!-- Heading tipo SB Admin -->
-    <div class="container-fluid p-3 p-lg-4">
-        <h4 class="mt-4"><?php echo $titulo; ?></h4>
-         <?php if (isset($validation)) : ?>
-            <div class="alert alert-danger">
-            <?php echo $validation->listErrors(); ?>
-            </div>
-        <?php endif; ?>
-        <form action="<?= base_url('unidades/actualizar') ?>" method="post" autocomplete="off">
+  <?= \Config\Services::validation()->listErrors(); ?>
 
-            <input type="hidden" value="<?php echo $datos['id']; ?>" name="id">
+  <div class="card">
+    <div class="card-body">
+      <form action="<?= base_url('/unidades/actualizar') ?>" method="post" autocomplete="off">
+        <?= csrf_field() ?>
+        <input type="hidden" id="id" name="id" value="<?php echo $unidad['id']; ?>">
 
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-12 col-sm-6">
-                        <label>Nombre</label>
-                        <input class="form-control" id="nombre" name="nombre" type="text"
-                            value="<?php echo $datos['nombre']; ?>" autofocus require>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                        <label>Nombre corto</label>
-                        <input class="form-control" id="nombre_corto" name="nombre_corto" type="text"
-                            value="<?php echo $datos['nombre_corto']; ?>" require>
-                    </div>
-                </div>
-            </div>
-            <a href="<?= base_url('unidades') ?>" class="btn btn-primary">Regresar</a>
-            <button type="submit" class="btn btn-success">Guardar</button>
-        </form>
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <label class="form-label" for="nombre">Nombre</label>
+            <input class="form-control" id="nombre" name="nombre" type="text" value="<?php echo $unidad['nombre']; ?>" autofocus required>
+          </div>
+        </div>
 
-</main>
+        <div class="d-flex gap-2 mt-4">
+          <a href="<?= base_url('/unidades') ?>" class="btn btn-outline-secondary">Regresar</a>
+          <button type="submit" class="btn btn-success">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
