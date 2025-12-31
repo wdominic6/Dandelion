@@ -66,7 +66,7 @@
             <div class="card-header">Productos en la venta</div>
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table id="tablaProductos" class="table table-hover table-striped align-middle mb-0 tablaProductos">
+                    <table id="tablaProductos" class="table table-hover table-striped align-middle mb-0 tablaProductos datatable">
                         <thead class="table-light">
                             <tr>
                                 <th>#</th>
@@ -120,7 +120,11 @@
                 }
 
                 $('#resultado_error').text('');
-                $('#tablaProductos tbody').empty().append(data.datos);
+                if (window.refreshDataTableRows) {
+                    window.refreshDataTableRows('#tablaProductos', data.datos);
+                } else {
+                    $('#tablaProductos tbody').empty().append(data.datos);
+                }
                 $('#total').val(data.total);
                 $('#codigo').val('').focus();
             }
@@ -175,7 +179,11 @@
                     return;
                 }
 
-                $('#tablaProductos tbody').empty().append(data.datos);
+                if (window.refreshDataTableRows) {
+                    window.refreshDataTableRows('#tablaProductos', data.datos);
+                } else {
+                    $('#tablaProductos tbody').empty().append(data.datos);
+                }
                 $('#total').val(data.total);
             }
         });
@@ -202,15 +210,22 @@
             }
         });
     });
-    $(function(){
-        $('#completa_venta').click(function(){
-            if ( $('#tablaProductos tbody tr').length == 0 ) {
+    $(function() {
+        $('#completa_venta').click(function() {
+            const $tabla = $('#tablaProductos');
+            let totalFilas = $tabla.find('tbody tr').length;
+
+            if (window.jQuery && $.fn.DataTable && $.fn.dataTable.isDataTable($tabla[0])) {
+                totalFilas = $tabla.DataTable().rows().count();
+            }
+
+            if (totalFilas === 0) {
                 alert('Agrega al menos un producto a la venta');
                 $('#codigo').focus();
                 return false;
-            } else {
-                $('#form_venta').submit();
             }
+
+            $('#form_venta').submit();
         });
-    })
+    });
 </script>

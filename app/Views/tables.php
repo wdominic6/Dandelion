@@ -22,7 +22,7 @@
       </p>
 
       <div class="table-responsive">
-        <table class="table table-striped table-hover align-middle mb-0">
+        <table class="table table-striped table-hover align-middle mb-0 datatable">
           <thead class="table-light">
             <tr>
               <th>#</th>
@@ -79,7 +79,7 @@
     <div class="card-header">Simple Table</div>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered align-middle mb-0">
+        <table class="table table-bordered align-middle mb-0 datatable">
           <thead class="table-light">
             <tr>
               <th>Cliente</th>

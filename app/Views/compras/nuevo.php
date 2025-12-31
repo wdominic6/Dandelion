@@ -43,7 +43,7 @@ $id_compra = uniqid();
                     </div>
                 </div>
                 <div class="row">
-                    <table id="tablaProductos" class="table table-hover table-striped table-sm table-responsive tablaProductos">
+                    <table id="tablaProductos" class="table table-hover table-striped table-sm table-responsive tablaProductos datatable">
                         <thead class="thead-dark">
                             <th>#</th>
                             <th>Codigo</th>
@@ -73,12 +73,18 @@ $id_compra = uniqid();
 <script>
     $(document).ready(function() {
         $("#completa_compra").click(function() {
-            let nFila = $("#tablaProductos tr").length;
-            if (nFila < 2) {
+            const $tabla = $("#tablaProductos");
+            let totalFilas = $tabla.find('tbody tr').length;
 
-            } else {
-                $("#form_compra").submit();
+            if (window.jQuery && $.fn.DataTable && $.fn.dataTable.isDataTable($tabla[0])) {
+                totalFilas = $tabla.DataTable().rows().count();
             }
+
+            if (totalFilas === 0) {
+                return;
+            }
+
+            $("#form_compra").submit();
         });
     });
 
@@ -128,8 +134,12 @@ $id_compra = uniqid();
                     } else {
                         var resultado = JSON.parse(resultado);
                         if (resultado.error == '') {
-                            $("#tablaProductos tbody").empty();
-                            $("#tablaProductos tbody").append(resultado.datos);
+                            if (window.refreshDataTableRows) {
+                                window.refreshDataTableRows('#tablaProductos', resultado.datos);
+                            } else {
+                                $("#tablaProductos tbody").empty();
+                                $("#tablaProductos tbody").append(resultado.datos);
+                            }
                             $("#total").val(resultado.total);
                             $("#id_producto").val('');
                             $("#codigo").val('');
@@ -154,8 +164,12 @@ $id_compra = uniqid();
                     $(tagCodigo).val('');
                 } else {
                     var resultado = JSON.parse(resultado);
-                    $("#tablaProductos tbody").empty();
-                    $("#tablaProductos tbody").append(resultado.datos);
+                    if (window.refreshDataTableRows) {
+                        window.refreshDataTableRows('#tablaProductos', resultado.datos);
+                    } else {
+                        $("#tablaProductos tbody").empty();
+                        $("#tablaProductos tbody").append(resultado.datos);
+                    }
                     $("#total").val(resultado.total);
                 }
             }
