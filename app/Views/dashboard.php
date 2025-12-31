@@ -10,29 +10,43 @@
     </div>
   </div>
 
-  <?php
-  $stats = $stats ?? [
-    ['label' => 'Ventas del dia', 'value' => '$1,240', 'delta' => '+8%'],
-    ['label' => 'Ordenes', 'value' => '32', 'delta' => '+3%'],
-    ['label' => 'Clientes activos', 'value' => '214', 'delta' => '+2%'],
-    ['label' => 'Productos bajos', 'value' => '9', 'delta' => '-1%'],
-  ];
-  ?>
-
   <div class="row g-3 mb-4">
-    <?php foreach ($stats as $stat): ?>
-      <div class="col-12 col-sm-6 col-xl-3">
-        <div class="card h-100">
-          <div class="card-body">
-            <div class="text-muted small"><?= esc($stat['label']) ?></div>
-            <div class="d-flex align-items-end justify-content-between">
-              <div class="h4 mb-0"><?= esc($stat['value']) ?></div>
-              <span class="badge badge-soft"><?= esc($stat['delta']) ?></span>
-            </div>
-          </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="text-muted small">Ventas del dia</div>
+          <div class="h4 mb-1">$<?= number_format((float) ($ventas_hoy_total ?? 0), 2) ?></div>
+          <div class="text-muted small">Hoy</div>
         </div>
       </div>
-    <?php endforeach; ?>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="text-muted small">Ordenes del dia</div>
+          <div class="h4 mb-1"><?= (int) ($ordenes_hoy ?? 0) ?></div>
+          <div class="text-muted small">Hoy</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="text-muted small">Clientes activos</div>
+          <div class="h4 mb-1"><?= (int) ($clientes_activos ?? 0) ?></div>
+          <div class="text-muted small">Activos</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="text-muted small">Productos bajos</div>
+          <div class="h4 mb-1"><?= (int) ($productos_bajos ?? 0) ?></div>
+          <div class="text-muted small">En riesgo</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="row g-3 mb-4">
@@ -41,6 +55,9 @@
         <div class="card-header">Ventas ultimos 7 dias</div>
         <div class="card-body">
           <canvas id="ventasChart" height="120"></canvas>
+          <?php if (empty($ventas_chart_labels ?? [])) : ?>
+            <div class="text-muted small">Sin datos para mostrar.</div>
+          <?php endif; ?>
         </div>
       </div>
     </div>
@@ -48,24 +65,18 @@
       <div class="card h-100">
         <div class="card-header">Inventario bajo</div>
         <div class="card-body">
-          <div class="list-group list-group-flush">
-            <div class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Azucar 1kg</span>
-              <span class="badge text-bg-warning">4</span>
+          <?php if (empty($inventario_bajo ?? [])) : ?>
+            <div class="text-muted small">Sin alertas de inventario.</div>
+          <?php else : ?>
+            <div class="list-group list-group-flush">
+              <?php foreach ($inventario_bajo as $producto) : ?>
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><?= esc($producto['nombre']) ?></span>
+                  <span class="badge text-bg-warning"><?= (int) $producto['existencias'] ?></span>
+                </div>
+              <?php endforeach; ?>
             </div>
-            <div class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Aceite 1L</span>
-              <span class="badge text-bg-warning">3</span>
-            </div>
-            <div class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Servilletas</span>
-              <span class="badge text-bg-warning">2</span>
-            </div>
-            <div class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Cafe molido</span>
-              <span class="badge text-bg-warning">1</span>
-            </div>
-          </div>
+          <?php endif; ?>
           <div class="mt-3">
             <a class="btn btn-sm btn-outline-primary" href="<?= base_url('productos') ?>">Ver productos</a>
           </div>
@@ -73,6 +84,14 @@
       </div>
     </div>
   </div>
+
+  <?php
+  $forma_pago_map = [
+    '001' => ['Efectivo', 'text-bg-success'],
+    '002' => ['Tarjeta', 'text-bg-primary'],
+    '003' => ['Transferencia', 'text-bg-warning'],
+  ];
+  ?>
 
   <div class="row g-3">
     <div class="col-12 col-lg-7">
@@ -90,30 +109,24 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>#V-1023</td>
-                  <td>Maria Gomez</td>
-                  <td><span class="badge text-bg-success">Efectivo</span></td>
-                  <td class="text-end">$85.20</td>
-                </tr>
-                <tr>
-                  <td>#V-1022</td>
-                  <td>Juan Perez</td>
-                  <td><span class="badge text-bg-primary">Tarjeta</span></td>
-                  <td class="text-end">$42.50</td>
-                </tr>
-                <tr>
-                  <td>#V-1021</td>
-                  <td>Publico general</td>
-                  <td><span class="badge text-bg-warning">Transferencia</span></td>
-                  <td class="text-end">$19.90</td>
-                </tr>
-                <tr>
-                  <td>#V-1020</td>
-                  <td>Ana Lopez</td>
-                  <td><span class="badge text-bg-success">Efectivo</span></td>
-                  <td class="text-end">$68.00</td>
-                </tr>
+                <?php if (empty($ventas_recientes ?? [])) : ?>
+                  <tr>
+                    <td colspan="4" class="text-center text-muted">Sin ventas registradas.</td>
+                  </tr>
+                <?php else : ?>
+                  <?php foreach ($ventas_recientes as $venta) : ?>
+                    <?php
+                      $pago = $forma_pago_map[$venta['forma_pago']] ?? ['Otro', 'text-bg-secondary'];
+                      $cliente = $venta['cliente'] ?? 'Publico general';
+                    ?>
+                    <tr>
+                      <td><?= esc($venta['folio']) ?></td>
+                      <td><?= esc($cliente) ?></td>
+                      <td><span class="badge <?= esc($pago[1]) ?>"><?= esc($pago[0]) ?></span></td>
+                      <td class="text-end">$<?= number_format((float) $venta['total'], 2) ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                <?php endif; ?>
               </tbody>
             </table>
           </div>
@@ -125,31 +138,18 @@
       <div class="card h-100">
         <div class="card-header">Productos mas vendidos</div>
         <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <div>
-              <div class="fw-semibold">Cafe molido</div>
-              <div class="text-muted small">120 unidades</div>
-            </div>
-            <span class="badge text-bg-primary">Top</span>
-          </div>
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <div>
-              <div class="fw-semibold">Leche deslactosada</div>
-              <div class="text-muted small">98 unidades</div>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <div>
-              <div class="fw-semibold">Pan integral</div>
-              <div class="text-muted small">84 unidades</div>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <div class="fw-semibold">Azucar 1kg</div>
-              <div class="text-muted small">72 unidades</div>
-            </div>
-          </div>
+          <?php if (empty($top_productos ?? [])) : ?>
+            <div class="text-muted small">No hay ventas registradas.</div>
+          <?php else : ?>
+            <?php foreach ($top_productos as $producto) : ?>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                  <div class="fw-semibold"><?= esc($producto['nombre']) ?></div>
+                  <div class="text-muted small"><?= (int) $producto['unidades'] ?> unidades</div>
+                </div>
+              </div>
+            <?php endforeach; ?>
+          <?php endif; ?>
           <div class="mt-3">
             <a class="btn btn-sm btn-outline-primary" href="<?= base_url('productos') ?>">Ver catalogo</a>
           </div>
@@ -164,13 +164,18 @@
     const chartEl = document.getElementById('ventasChart');
     if (!chartEl || typeof Chart === 'undefined') return;
 
+    const labels = <?= json_encode($ventas_chart_labels ?? []) ?>;
+    const data = <?= json_encode($ventas_chart_data ?? []) ?>;
+
+    if (!labels.length) return;
+
     new Chart(chartEl, {
       type: 'line',
       data: {
-        labels: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+        labels,
         datasets: [{
           label: 'Ventas',
-          data: [120, 180, 150, 220, 260, 210, 190],
+          data,
           borderColor: '#1d4ed8',
           backgroundColor: 'rgba(29, 78, 216, 0.15)',
           tension: 0.35,

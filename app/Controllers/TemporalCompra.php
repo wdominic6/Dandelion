@@ -20,19 +20,21 @@ class TemporalCompra extends BaseController
         $producto = $this->productos->where('id', $id_producto)->first();
 
         if ($producto) {
+            $tipo = $this->request->getGet('tipo');
+            $precio = $tipo === 'venta' ? ($producto['precio_venta'] ?? 0) : $producto['precio_compra'];
             $datosExiste = $this->temporal_compra->porIdProductoCompra($id_producto, $id_compra);
             if ($datosExiste) {
                 $cantidad = $datosExiste->cantidad + $cantidad;
                 $subtotal = $cantidad * $datosExiste->precio;
                 $this->temporal_compra->actualizarProductoCompra($id_producto, $id_compra, $cantidad, $subtotal);
             } else {
-                $subtotal = $cantidad * $producto['precio_compra'];
+                $subtotal = $cantidad * $precio;
                 $this->temporal_compra->save([
                     'folio'       => $id_compra,
                     'id_producto' => $id_producto,
                     'codigo'      => $producto['codigo'],
                     'nombre'      => $producto['nombre'],
-                    'precio'      => $producto['precio_compra'],
+                    'precio'      => $precio,
                     'cantidad'    => $cantidad,
                     'subtotal'    => $subtotal,
                 ]);

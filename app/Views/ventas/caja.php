@@ -26,8 +26,8 @@
                                     <label class="form-label" for="cliente">Cliente</label>
                                     <input type="hidden" id="id_cliente" name="id_cliente" value="1">
                                     <input type="text" class="form-control" id="cliente" name="cliente"
-                                           placeholder="Escriba el nombre del cliente" value="publico en general"
-                                           autocomplete="off" required>
+                                        placeholder="Escriba el nombre del cliente" value="publico en general"
+                                        autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -41,8 +41,7 @@
                             <div class="col-12 col-md-8">
                                 <label class="form-label" for="codigo">Codigo de barras</label>
                                 <input class="form-control" id="codigo" name="codigo" type="text"
-                                       placeholder="Escriba el codigo y presiona enter"
-                                       onkeyup="buscarProducto(event, this, this.value)" autofocus>
+                                    placeholder="Escriba el codigo y presiona enter" autofocus>
                             </div>
                             <div class="col-12 col-md-4">
                                 <label class="form-label" for="resultado_error">Estado</label>
@@ -88,8 +87,102 @@
 </div>
 
 <script>
+    const ventaFolio = "<?php echo $idVentaTmp; ?>";
+
+    function agregarProductoPorId(id_producto, cantidad, folio) {
+        if (!id_producto || cantidad <= 0) {
+            return;
+        }
+
+        $.ajax({
+            url: <?= json_encode(base_url('TemporalCompra/inserta')) ?> + '/' + id_producto + '/' + cantidad + '/' + folio + '?tipo=venta',
+            success: function(resultado) {
+                if (!resultado) {
+                    return;
+                }
+
+                let data = resultado;
+                if (typeof resultado === 'string') {
+                    try {
+                        data = JSON.parse(resultado);
+                    } catch (err) {
+                        data = null;
+                    }
+                }
+
+                if (!data) {
+                    return;
+                }
+
+                if (data.error) {
+                    $('#resultado_error').text(data.error);
+                    return;
+                }
+
+                $('#resultado_error').text('');
+                $('#tablaProductos tbody').empty().append(data.datos);
+                $('#total').val(data.total);
+                $('#codigo').val('').focus();
+            }
+        });
+    }
+
+    function buscarProductoPorCodigo(e) {
+        const enterKey = 13;
+        if (e.which !== enterKey) {
+            return;
+        }
+
+        const codigo = $('#codigo').val().trim();
+        if (!codigo) {
+            return;
+        }
+
+        $.ajax({
+            url: "<?= base_url('/productos/buscarPorCodigo') ?>" + codigo,
+            dataType: 'json',
+            success: function(resultado) {
+                if (!resultado || !resultado.existe) {
+                    const mensaje = resultado && resultado.error ? resultado.error : 'No existe el producto';
+                    $('#resultado_error').text(mensaje);
+                    return;
+                }
+
+                $('#resultado_error').text('');
+                agregarProductoPorId(resultado.datos.id, 1, ventaFolio);
+            }
+        });
+    }
+
+    function eliminaProducto(id_producto, folio) {
+        $.ajax({
+            url: "<?= base_url('TemporalCompra/eliminar') ?>/" + id_producto + "/" + folio,
+            success: function(resultado) {
+                if (!resultado) {
+                    return;
+                }
+
+                let data = resultado;
+                if (typeof resultado === 'string') {
+                    try {
+                        data = JSON.parse(resultado);
+                    } catch (err) {
+                        data = null;
+                    }
+                }
+
+                if (!data) {
+                    return;
+                }
+
+                $('#tablaProductos tbody').empty().append(data.datos);
+                $('#total').val(data.total);
+            }
+        });
+    }
+
     $(function() {
-        $("#cliente").autocomplete({
+        $('#cliente').autocomplete({
             source: "<?php echo base_url(); ?>/clientes/autocompleteData",
             minLength: 3,
             select: function(event, ui) {
@@ -97,5 +190,27 @@
                 $('#id_cliente').val(ui.item.id);
             }
         });
+
+        $('#codigo').on('keyup', buscarProductoPorCodigo);
+        $('#codigo').autocomplete({
+            source: "<?= base_url('productos/autocompleteData') ?>",
+            minLength: 3,
+            select: function(event, ui) {
+                event.preventDefault();
+                $('#codigo').val(ui.item.value);
+                agregarProductoPorId(ui.item.id, 1, ventaFolio);
+            }
+        });
     });
+    $(function(){
+        $('#completa_venta').click(function(){
+            if ( $('#tablaProductos tbody tr').length == 0 ) {
+                alert('Agrega al menos un producto a la venta');
+                $('#codigo').focus();
+                return false;
+            } else {
+                $('#form_venta').submit();
+            }
+        });
+    })
 </script>

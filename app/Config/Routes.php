@@ -41,6 +41,7 @@ $routes->get('productos/eliminar/(:num)', 'Productos::eliminar/$1');
 $routes->get('productos/eliminados', 'Productos::eliminados');
 $routes->get('productos/reingresar/(:num)', 'Productos::reingresar/$1');
 $routes->get('productos/buscarPorCodigo(:any)', 'Productos::buscarPorCodigo/$1');
+$routes->get('productos/autocompleteData', 'Productos::autocompleteData');
 
 $routes->get('clientes', 'Clientes::index');
 $routes->get('clientes/nuevo', 'Clientes::nuevo');
@@ -93,6 +94,8 @@ $routes->get('compras/compras', 'Compras::index');
 $routes->get('ventas/venta', 'Ventas::venta');
 $routes->get('ventas/caja', 'Ventas::caja');
 $routes->post('ventas/guarda', 'Ventas::guarda');
+$routes->get('ventas/muestraTicket/(:num)', 'Ventas::muestraTicket/$1');
+$routes->get('ventas/generaTicket/(:num)', 'Ventas::generaTicket/$1');
 
 
 
