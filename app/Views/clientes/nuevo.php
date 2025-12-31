@@ -33,7 +33,11 @@
             <input class="form-control" id="correo" name="correo" type="text">
           </div>
         </div>
-
+        <div class="col-12 col-md-6">
+            <label class="form-label" for="hobbies">Hobbies</label>
+            <input class="form-control" id="hobbies" name="hobbies" type="text">
+          </div>
+        </div>
         <div class="d-flex gap-2 mt-4">
           <a href="<?= base_url('clientes') ?>" class="btn btn-outline-secondary">Regresar</a>
           <button type="submit" class="btn btn-success">Guardar</button>

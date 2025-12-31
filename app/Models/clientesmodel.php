@@ -13,7 +13,7 @@ class clientesmodel  extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['nombre', 'direccion', 'telefono', 'correo', 'activo'];
+    protected $allowedFields = ['nombre', 'direccion', 'telefono', 'correo', 'hobbies', 'activo'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

@@ -59,6 +59,7 @@ class Clientes extends BaseController
                 'direccion' => $this->request->getPost('direccion'),
                 'telefono' => $this->request->getPost('telefono'),
                 'correo' => $this->request->getPost('correo'),
+                'hobbies' => $this->request->getPost('hobbies'),
             ]);
             return redirect()->to(base_url('/clientes'));
         } else {
@@ -86,6 +87,7 @@ class Clientes extends BaseController
             'direccion' => $this->request->getPost('direccion'),
             'telefono' => $this->request->getPost('telefono'),
             'correo' => $this->request->getPost('correo'),
+            'hobbies' => $this->request->getPost('hobbies'),
         ]);
         return redirect()->to(base_url('clientes'));
     }

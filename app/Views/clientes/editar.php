@@ -35,6 +35,10 @@
             <label class="form-label" for="correo">Correo</label>
             <input class="form-control" id="correo" name="correo" type="text" value="<?php echo $cliente['correo']; ?>">
           </div>
+          <div class="col-12 col-md-6">
+            <label class="form-label" for="hobbies">Hobbies</label>
+            <input class="form-control" id="hobbies" name="hobbies" type="text" value="<?php echo $cliente['hobbies']; ?>">
+          </div>
         </div>
 
         <div class="d-flex gap-2 mt-4">

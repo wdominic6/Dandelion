@@ -22,6 +22,7 @@
               <th>Direccion</th>
               <th>Telefono</th>
               <th>Correo</th>
+              <th>Hobbies</th>
               <th class="text-end">Acciones</th>
             </tr>
           </thead>
@@ -33,6 +34,7 @@
                 <td><?php echo $dato['direccion']; ?></td>
                 <td><?php echo $dato['telefono']; ?></td>
                 <td><?php echo $dato['correo']; ?></td>
+                <td><?php echo $dato['hobbies']; ?></td>
                 <td class="text-end">
                   <a href="<?= base_url('/clientes/editar/' . $dato['id']) ?>" class="btn btn-sm btn-outline-primary">Editar</a>
                   <a href="#"
